@@ -1,0 +1,971 @@
+/* ==================== CSS VARIABLES - OPTIMIZED FOR iPAD ==================== */
+:root {
+    /* Sunvolt Brand Colors - High Contrast for iPad outdoor use */
+    --primary: #FF6B00;
+    --primary-dark: #D65A00;
+    --primary-light: #FF8533;
+    --secondary: #FFB84D;
+    --accent: #FF4500;
+
+    /* Status Colors - High visibility */
+    --success: #00C853;
+    --danger: #FF1744;
+    --warning: #FFB300;
+    --info: #00B0FF;
+
+    /* Neutral Colors - Better contrast */
+    --bg: #FAFAFA;
+    --text: #1A1A1A;
+    --text-secondary: #424242;
+    --border: #BDBDBD;
+    --card-bg: #FFFFFF;
+    --shadow: rgba(0, 0, 0, 0.15);
+    --input-bg: #FFFFFF;
+    --overlay: rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] {
+    /* Dark mode - Optimized for indoor iPad use */
+    --bg: #121212;
+    --text: #E8E8E8;
+    --text-secondary: #B0B0B0;
+    --border: #3A3A3A;
+    --card-bg: #1E1E1E;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --input-bg: #2A2A2A;
+    --overlay: rgba(0, 0, 0, 0.8);
+
+    /* Keep vibrant colors in dark mode */
+    --primary: #FF7C1F;
+    --primary-dark: #FF6B00;
+    --success: #00E676;
+    --danger: #FF5252;
+    --warning: #FFD740;
+}
+
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==================== HEADER - Enhanced for iPad ==================== */
+.header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 24px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.header-logo {
+    flex: 1;
+}
+
+.logo-sunvolt {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-icon {
+    font-size: 2.2em;
+    background: rgba(255, 255, 255, 0.25);
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.logo-company {
+    font-size: 1.8em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-subtitle {
+    font-size: 0.95em;
+    font-weight: 500;
+    opacity: 0.95;
+    letter-spacing: 1px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.icon-btn {
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.icon-btn:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.progress-info {
+    text-align: center;
+    font-size: 1em;
+    margin-bottom: 10px;
+    opacity: 0.98;
+    font-weight: 500;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.3);
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+    background: white;
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* ==================== NAVIGATION - iPad Optimized ==================== */
+.nav-section {
+    background: var(--card-bg);
+    padding: 16px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 100px;
+    z-index: 99;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.nav-section button {
+    flex: 1;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(255, 107, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-section button:disabled {
+    background: #9E9E9E;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.nav-section button:not(:disabled):active {
+    transform: scale(0.97);
+}
+
+.nav-section button:not(:disabled):hover {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.4);
+}
+
+/* ==================== CONTENT ==================== */
+.content {
+    padding: 24px 20px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 1.8em;
+    font-weight: 800;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 4px solid var(--primary);
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ==================== FORMS - Enhanced Contrast ==================== */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 17px;
+    background: var(--input-bg);
+    color: var(--text);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: var(--primary-light);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+.info-badge {
+    background: #FFF9E6;
+    border: 2px solid var(--warning);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #6B5200;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* ==================== BUTTONS - High Visibility ==================== */
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #616161;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary:hover {
+    background: #424242;
+}
+
+.btn-success {
+    background: var(--success);
+    font-size: 18px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0, 200, 83, 0.35);
+}
+
+.btn-success:hover {
+    background: #00A043;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 200, 83, 0.45);
+}
+
+.btn-photo {
+    background: var(--secondary);
+    box-shadow: 0 4px 12px rgba(255, 184, 77, 0.3);
+}
+
+.btn-photo:hover {
+    background: #FF9F1A;
+}
+
+/* ==================== CHECK BOXES - Enhanced Visibility ==================== */
+.check-box {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px var(--shadow);
+}
+
+.check-box:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.check-header {
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: var(--text);
+}
+
+/* ==================== RADIO BUTTONS - High Contrast ==================== */
+.radio-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.radio-btn {
+    flex: 1;
+    min-width: 80px;
+    background: var(--card-bg);
+    border: 3px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.radio-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: white;
+    transform: scale(1.03);
+}
+
+.radio-btn input {
+    display: none;
+}
+
+.radio-btn.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+}
+
+.radio-clear {
+    background: #757575;
+    border-color: #757575;
+    color: white;
+    font-size: 14px;
+    flex: 0 0 auto;
+    min-width: 60px;
+}
+
+.radio-clear:hover {
+    background: #616161;
+    border-color: #616161;
+}
+
+/* ==================== PHOTOS ==================== */
+.photo-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.photo-item {
+    position: relative;
+    animation: photoAppear 0.4s ease;
+}
+
+@keyframes photoAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 6px var(--shadow);
+}
+
+.photo-delete {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: var(--danger);
+    color: white;
+    border: 2px solid white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.photo-delete:active {
+    transform: scale(0.9);
+}
+
+/* ==================== ROOF CARDS ==================== */
+.roof-card {
+    background: var(--card-bg);
+    border: 3px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+    animation: cardAppear 0.5s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px var(--shadow);
+}
+
+.roof-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 6px 20px var(--shadow);
+    transform: translateY(-3px);
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.roof-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.roof-card-title {
+    font-size: 1.4em;
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==================== GRIDS ==================== */
+.dimension-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.orientation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.export-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+/* ==================== CANVAS ==================== */
+.canvas-container {
+    border: 3px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    overflow: hidden;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.canvas-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* ==================== CHECKBOXES ==================== */
+.checkbox-item {
+    background: var(--card-bg);
+    border: 3px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.checkbox-item:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.checkbox-item input {
+    width: 26px;
+    height: 26px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.checkbox-item.checked {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+}
+
+/* ==================== MODALS ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    backdrop-filter: blur(4px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 32px;
+    border-radius: 18px;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-title {
+    font-size: 1.6em;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--text);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.close-btn:hover {
+    background: var(--border);
+}
+
+/* ==================== LOADING ==================== */
+.loading {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+}
+
+.loading.active {
+    display: flex;
+}
+
+.loading-content {
+    background: var(--card-bg);
+    padding: 48px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.spinner {
+    border: 6px solid #E0E0E0;
+    border-top: 6px solid var(--primary);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 24px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==================== AUTO-SAVE ==================== */
+.auto-save-indicator {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--success);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0, 200, 83, 0.4);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 1000;
+}
+
+.auto-save-indicator.show {
+    opacity: 1;
+}
+
+/* ==================== HISTORY ==================== */
+.history-item {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.history-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--shadow);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 12px;
+}
+
+.history-title {
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--primary);
+}
+
+.history-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.history-info {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.history-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.history-actions button {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.search-box {
+    margin-bottom: 24px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ==================== GOOGLE DRIVE ==================== */
+.gdrive-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.status-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #BDBDBD;
+}
+
+.status-dot.connected {
+    background: var(--success);
+    box-shadow: 0 0 12px var(--success);
+}
+
+/* ==================== RESPONSIVE - iPad Optimized ==================== */
+@media (min-width: 768px) {
+    .dimension-grid {
+        grid-template-columns: 2fr 2fr 3fr;
+    }
+
+    .logo-company {
+        font-size: 2em;
+    }
+
+    .logo-subtitle {
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-top {
+        flex-direction: column;
+        gap: 14px;
+        align-items: stretch;
+    }
+
+    .logo-sunvolt {
+        justify-content: center;
+    }
+
+    .header-actions {
+        justify-content: center;
+    }
+
+    .export-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-section button {
+        font-size: 15px;
+        padding: 14px;
+    }
+}
+
+/* ==================== iPad Specific Optimizations ==================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* iPad specific styles */
+    body {
+        font-size: 17px;
+    }
+
+    .btn,
+    input,
+    textarea,
+    select {
+        font-size: 18px;
+    }
+
+    .icon-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+    }
+
+    .nav-section button {
+        padding: 18px;
+        font-size: 18px;
+    }
+
+    .section-title {
+        font-size: 2.2em;
+    }
+}
+
+/* ==================== High Contrast Mode for Outdoor Use ==================== */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #757575;
+        --text: #000000;
+    }
+
+    .btn,
+    .radio-btn,
+    .checkbox-item {
+        border-width: 3px;
+    }
+}

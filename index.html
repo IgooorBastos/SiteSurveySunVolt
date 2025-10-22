@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sunvolt - Solar Site Survey</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p><strong id="loadingTitle">Processing...</strong></p>
+            <div id="loadingProgress" style="margin-top: 15px; font-size: 14px; color: #666;">Preparing...</div>
+        </div>
+    </div>
+
+    <!-- Auto-save Indicator -->
+    <div class="auto-save-indicator" id="autoSaveIndicator">✓ Auto-saved</div>
+
+    <!-- History Modal -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Survey History</div>
+                <button class="close-btn" onclick="closeHistoryModal()">×</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="historySearch" placeholder="Search by customer name or Eircode...">
+            </div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <!-- Google Drive Modal -->
+    <div class="modal" id="gdriveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Google Drive</div>
+                <button class="close-btn" onclick="closeGDriveModal()">×</button>
+            </div>
+            <div class="gdrive-status">
+                <div class="status-dot" id="gdriveStatusDot"></div>
+                <div id="gdriveStatusText">Not connected</div>
+            </div>
+            <button class="btn" id="gdriveConnectBtn" onclick="connectGoogleDrive()">Connect Google Drive</button>
+            <button class="btn btn-secondary" id="gdriveSaveBtn" onclick="saveToGoogleDrive()" style="margin-top: 10px; display: none;">Save to Drive</button>
+            <button class="btn btn-secondary" id="gdriveLoadBtn" onclick="loadFromGoogleDrive()" style="margin-top: 10px; display: none;">Load from Drive</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <div class="header-logo">
+                <div class="logo-sunvolt">
+                    <div class="logo-icon">☀</div>
+                    <div class="logo-text">
+                        <div class="logo-company">SUNVOLT</div>
+                        <div class="logo-subtitle">Site Survey</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="saveProgressBtn" title="Save Progress (JSON)">
+                    <span>💾</span>
+                </button>
+                <button class="icon-btn" id="loadProgressBtn" title="Load Progress (JSON)">
+                    <span>📂</span>
+                </button>
+                <button class="icon-btn" id="historyBtn" title="History">
+                    <span>📋</span>
+                </button>
+                <button class="icon-btn" id="gdriveBtn" title="Google Drive">
+                    <span>☁️</span>
+                </button>
+                <button class="icon-btn" id="themeToggle" title="Toggle theme">
+                    <span>🌙</span>
+                </button>
+            </div>
+            <!-- Hidden file input for JSON import -->
+            <input type="file" id="jsonFileInput" accept=".json,application/json" style="display: none;">
+        </div>
+        <div class="progress-info" id="progressText">0% Complete - Section 1 of 6</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-section">
+        <button id="prevBtn" disabled>← Prev</button>
+        <button id="nextBtn">Next →</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <form id="surveyForm">
+            <!-- Section 1: Basic Information -->
+            <div class="section active" data-section="1">
+                <h2 class="section-title">Basic Information</h2>
+
+                <div class="form-group">
+                    <label>Eircode *</label>
+                    <input type="text" id="eircode" placeholder="e.g., D02 X285" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Date & Time *</label>
+                    <input type="datetime-local" id="dateTime" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Customer Name *</label>
+                    <input type="text" id="customerName" placeholder="Enter customer name" required>
+                </div>
+            </div>
+
+            <!-- Section 2: System Checks -->
+            <div class="section" data-section="2">
+                <h2 class="section-title">System Checks</h2>
+
+                <div class="check-box">
+                    <div class="check-header">WiFi Signal - Inverter Connection</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="wifiSignal" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="wifiSignal" value="No">❌ No</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="wifiSignal">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="wifiSignal">📷 Photo</button>
+                    <input type="file" id="wifiSignalPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="wifiSignalPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="check-box">
+                    <div class="check-header">Earthing Rod Exists</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="earthingRod" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="earthingRod" value="No">❌ No</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="earthingRod">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="earthingRod">📷 Photo</button>
+                    <input type="file" id="earthingRodPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="earthingRodPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="check-box">
+                    <div class="check-header">Gas Meter Bonded</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="gasMeter" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="gasMeter" value="No">❌ No</label>
+                        <label class="radio-btn"><input type="radio" name="gasMeter" value="No Gas">🚫 No Gas</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="gasMeter">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="gasMeter">📷 Photo</button>
+                    <input type="file" id="gasMeterPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="gasMeterPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="check-box">
+                    <div class="check-header">Fuseboard Suitable</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="fuseboard" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="fuseboard" value="No">❌ No</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="fuseboard">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="fuseboard">📷 Photo</button>
+                    <input type="file" id="fuseboardPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="fuseboardPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="check-box">
+                    <div class="check-header">Electrical Meter Suitable</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="electricalMeter" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="electricalMeter" value="No">❌ No</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="electricalMeter">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="electricalMeter">📷 Photo</button>
+                    <input type="file" id="electricalMeterPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="electricalMeterPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="check-box">
+                    <div class="check-header">Water Tank Bonded</div>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="waterTank" value="Yes">✅ Yes</label>
+                        <label class="radio-btn"><input type="radio" name="waterTank" value="No">❌ No</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="waterTank">✖</button>
+                    </div>
+                    <button type="button" class="btn btn-photo" data-photo="waterTank">📷 Photo</button>
+                    <input type="file" id="waterTankPhoto" accept="image/*" capture="environment" style="display: none;">
+                    <div id="waterTankPreview" class="photo-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Notes</label>
+                    <textarea id="systemNotes" placeholder="Any observations"></textarea>
+                </div>
+
+                <div class="info-badge" id="photoCountInfo">
+                    Photos: <span id="photoCount">0</span>/20
+                </div>
+            </div>
+
+            <!-- Section 3: Roofs -->
+            <div class="section" data-section="3">
+                <h2 class="section-title">Roof Assessment</h2>
+                <div id="roofsContainer"></div>
+                <div style="text-align: center; padding: 24px 0; border-top: 2px dashed var(--border); margin-top: 20px;">
+                    <button type="button" id="addRoofBtn" class="btn">➕ Add Another Roof</button>
+                </div>
+            </div>
+
+            <!-- Section 4: Customer Preferences -->
+            <div class="section" data-section="4">
+                <h2 class="section-title">Customer Preferences</h2>
+
+                <div class="form-group">
+                    <label>Inverter Type</label>
+                    <div class="radio-group">
+                        <label class="radio-btn"><input type="radio" name="inverterType" value="String">String</label>
+                        <label class="radio-btn"><input type="radio" name="inverterType" value="Hybrid">Hybrid</label>
+                        <button type="button" class="radio-btn radio-clear" data-group="inverterType">✖</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Battery Storage (kWh)</label>
+                    <input type="number" id="batteryKwh" min="0" step="0.1" placeholder="e.g., 5.0, 10.0">
+                    <div class="info-badge">Common: 5, 10, 15, 20 kWh</div>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="epsSwitch">
+                    <label for="epsSwitch">EPS Safety Switch</label>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eddi">
+                    <label for="eddi">Eddi Water Timer</label>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="birdProtector">
+                    <label for="birdProtector">Bird Protector</label>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Notes</label>
+                    <textarea id="preferencesNotes" placeholder="Customer preferences"></textarea>
+                </div>
+            </div>
+
+            <!-- Section 5: Additional Notes -->
+            <div class="section" data-section="5">
+                <h2 class="section-title">Additional Notes</h2>
+
+                <div class="form-group">
+                    <label>General Notes</label>
+                    <textarea id="generalNotes" placeholder="Any additional information" style="min-height: 140px;"></textarea>
+                </div>
+
+                <button type="button" class="btn" id="additionalPhoto">📷 Add Photos</button>
+                <input type="file" id="additionalPhotoInput" accept="image/*" capture="environment" style="display: none;" multiple>
+                <div id="additionalPhotoPreview" class="photo-preview"></div>
+            </div>
+
+            <!-- Section 6: Review & Submit -->
+            <div class="section" data-section="6">
+                <h2 class="section-title">Review & Export</h2>
+                <div id="surveyReview"></div>
+
+                <div class="export-buttons">
+                    <button type="button" class="btn btn-success" id="generatePDF">📄 PDF Report</button>
+                    <button type="button" class="btn btn-success" id="exportJSON">💾 JSON</button>
+                </div>
+
+                <button type="button" class="btn btn-secondary" id="shareSurvey" style="margin-bottom: 20px;">🔗 Share</button>
+
+                <div style="padding-top: 20px; border-top: 2px dashed var(--border);">
+                    <button type="button" class="btn btn-secondary" id="resetSurvey" style="background: var(--danger);">🔄 New Survey</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
